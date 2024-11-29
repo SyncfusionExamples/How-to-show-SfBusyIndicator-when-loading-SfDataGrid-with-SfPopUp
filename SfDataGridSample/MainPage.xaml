@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:datagrid="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             xmlns:inputLayout="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+             xmlns:local="clr-namespace:SfDataGridSample"
+             x:Class="SfDataGridSample.MainPage">
+
+    <ContentPage.BindingContext>
+        <local:EmployeeViewModel x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+
+    <StackLayout>
+        <Button Text="Show PopUp"
+                Clicked="ClickToShowPopup_Clicked" />
+        <popup:SfPopup x:Name="popUp"
+                       AutoSizeMode="Height"
+                       HeaderTitle="SfDataGrid"
+                       ShowFooter="True"
+                       HeightRequest="500"
+                       WidthRequest="400"
+                       ShowCloseButton="True"
+                       AcceptButtonText="ok"
+                       Opened="popUp_Opened"
+                       AppearanceMode="OneButton">
+            <popup:SfPopup.PopupStyle>
+                <popup:PopupStyle StrokeThickness="2"
+                                  CornerRadius="10" />
+            </popup:SfPopup.PopupStyle>
+            <popup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <Grid HeightRequest="550"
+                          ChildAdded="Grid_ChildAdded">
+                        <datagrid:SfDataGrid AutoGenerateColumnsMode="None"
+                                             IsVisible="False"
+                                             x:Name="dataGrid"
+                                             Margin="0,10,0,10"
+                                             HeightRequest="350"
+                                             MaximumWidthRequest="380"
+                                             SelectionMode="Single"
+                                             NavigationMode="Cell"
+                                             ColumnWidthMode="Auto"
+                                             ItemsSource="{Binding Employees, Source={x:Reference viewModel}}">
+                            <datagrid:SfDataGrid.Columns>
+                                <datagrid:DataGridTextColumn HeaderText="Employee Name"
+                                                             MappingName="Name" />
+                                <datagrid:DataGridTextColumn  HeaderText="Contact ID"
+                                                              MappingName="ContactID" />
+                                <datagrid:DataGridTextColumn  HeaderText="Gender"
+                                                              MappingName="Gender" />
+                                <datagrid:DataGridTextColumn  HeaderText="Designation"
+                                                              MappingName="Title" />
+                            </datagrid:SfDataGrid.Columns>
+                        </datagrid:SfDataGrid>
+
+                        <inputLayout:SfBusyIndicator AnimationType="CircularMaterial"
+                                                     x:Name="busyIndicator"
+                                                     DurationFactor="2"
+                                                     TitlePlacement="None"
+                                                     WidthRequest="50"
+                                                     HeightRequest="50"
+                                                     IsRunning="True" />
+
+                    </Grid>
+                </DataTemplate>
+            </popup:SfPopup.ContentTemplate>
+        </popup:SfPopup>
+    </StackLayout>
+</ContentPage>
